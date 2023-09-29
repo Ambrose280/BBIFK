@@ -2,6 +2,11 @@ from django.contrib import admin
 from .models import Address, Category, Product, Cart, Order
 import admin_thumbnails
 # Register your models here.
+from django.contrib.admin import AdminSite
+admin.site.site_header = 'Boutique By Ifiok Administration'
+admin.site.site_title = 'Boutique By Ifiok Administration'
+
+
 class AddressAdmin(admin.ModelAdmin):
     list_display = ('user', 'locality', 'city', 'state')
     list_filter = ('city', 'state')

@@ -3,7 +3,7 @@
 from pathlib import Path
 
 import os
-
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -93,6 +93,16 @@ DATABASES = {
         'PORT': '',           # Leave this empty for the default PostgreSQL port (5432)
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'defaultdb',
+#         'USER': 'avnadmin',
+#         'PASSWORD': 'AVNS_kkoU0ZCgByLMeUCwNo9',
+#         'HOST': 'pg-1bb56977-ifiokambrose-8ab2.aivencloud.com',  # You can specify your database server's hostname or IP address here
+#         'PORT': '14674',           # Leave this empty for the default PostgreSQL port (5432)
+#     }
+# }
 
 
 
