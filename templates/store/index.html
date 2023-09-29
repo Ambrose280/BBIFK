@@ -60,9 +60,9 @@
 
                       <div class="badge text-white badge-"></div>
                       
-                      <a class="d-block" href="{% url 'store:product-detail' product.slug %}" style="width: 232px; height: 350px;">
+                      <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
                         {% if product.product_image %}
-                          <img class="img-fluid w-100" src="{{ product.product_image.url }}" alt="{{product.title}}" style="object-fit: contain; width: 240px; height: auto; margin-left: 40px">
+                          <img class="img-fluid w-100" src="{{ product.product_image.url }}" alt="{{product.title}}" style="object-fit: contain;">
                         
                         {% endif %}
                       </a>
