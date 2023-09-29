@@ -175,7 +175,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 
 }
-STATIC_ROOT = os.path.join(BASE_DIR, 'djstatic')
+
 STATIC_URL = '/static/'
 
 
