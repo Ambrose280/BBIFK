@@ -177,7 +177,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Settings for Media
 MEDIA_URL = '/media/'
