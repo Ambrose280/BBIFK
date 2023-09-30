@@ -222,7 +222,7 @@ def checkout(request):
         # And Deleting from Cart
     
         c.delete()
-    client.messages.create(from_='+17128833459', to='+2347042221248', body='Go and Pick an Item for ' + user + 'at ' + address)
+    client.messages.create(from_='+17128833459', to='+2347042221248', body='Go and Pick an Item for ' + str(user) + 'at ' + str(address))
         
     return redirect('store:orders')
 
