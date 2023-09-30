@@ -9,20 +9,10 @@ import decimal
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator # for Class Based Views
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from twilio.rest import Client
-# Create your views here.
+
 from django.conf import settings
 
-def broadcast_sms(request):
-    message_to_broadcast = ("How are you")
-    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
-    for recipient in settings.SMS_BROADCAST_TO_NUMBERS:
-        print(recipient)
-        if recipient:
-            client.messages.create(to=recipient,
-                                   from_=settings.TWILIO_NUMBER,
-                                   body=message_to_broadcast)
-    return HttpResponse("messages sent!" + message_to_broadcast, 200)
+from twilio.rest import Client
 
 def home(request):
     categories = Category.objects.filter(is_active=True, is_featured=True)[:3]
@@ -217,6 +207,9 @@ def minus_cart(request, cart_id):
 
 @login_required
 def checkout(request):
+    account_sid = 'AC8377f54cdd5a489e9adee3de643a5317'
+    auth_token = 'c7964a459325604a81e0f5e6bdc6eef0'
+    client = Client(account_sid, auth_token)
     user = request.user
     address_id = request.GET.get('address')
     
@@ -227,7 +220,10 @@ def checkout(request):
         # Saving all the products from Cart to Order
         Order(user=user, address=address, product=c.product, quantity=c.quantity).save()
         # And Deleting from Cart
+    
         c.delete()
+    client.messages.create(from_='+17128833459', to='+2347042221248', body='Go and Pick an Item for ' + user + 'at ' + address)
+        
     return redirect('store:orders')
 
 
@@ -239,14 +235,21 @@ def orders(request):
 @login_required
 def create_order(request):
     all_orders = Cart.objects.filter(user=request.user)
+    account_sid = 'AC8377f54cdd5a489e9adee3de643a5317'
+    auth_token = 'c7964a459325604a81e0f5e6bdc6eef0'
+    client = Client(account_sid, auth_token)
+    client.messages.create(from_='+17128833459', to='+2347042221248', body='You just sent an SMS from Python using Twilio!')
+    #09137245805
+    
 
-        # # Create a new order
-        # order = Order.objects.create(
-        #     user_id=user_id,
-        #     address_id=address_id,
-        #     product_id=product_id,
-        #     quantity=quantity
-        # )
+
+
+
+
+
+
+                       
+                       
 
 
     return redirect('store:orders')

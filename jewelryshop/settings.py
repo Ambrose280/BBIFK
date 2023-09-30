@@ -21,13 +21,7 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-MY_ACCOUNT_SID='SK99b74e1c871a6a3f098cf7f7e249eb9a'
-TWILIO_AUTH_TOKEN='XXXXXXXXXXXXXX'
-MY_TWILIO_NUMBER='+XXXXXXXXXX'
-SMS_BROADCAST_TO_NUMBERS = [
-   "+23XXXXXXXXXXX",
-   "+23XXXXXXXXXXX", # use the format +1XXXXXXXXXX
- ]
+
 INSTALLED_APPS = [
     'cloudinary_storage',
     'django.contrib.staticfiles',

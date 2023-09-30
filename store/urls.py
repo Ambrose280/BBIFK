@@ -31,7 +31,6 @@ urlpatterns = [
     path('user/remove-address/<int:id>/', views.remove_address, name="remove-address"),
     path('product/test/', views.test, name="test"),
 
-    path(r'broadcast', views.broadcast_sms, name="default"),
 
     
 ]
