@@ -9,8 +9,20 @@ import decimal
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator # for Class Based Views
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from twilio.rest import Client
 # Create your views here.
+from django.conf import settings
+
+def broadcast_sms(request):
+    message_to_broadcast = ("How are you")
+    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+    for recipient in settings.SMS_BROADCAST_TO_NUMBERS:
+        print(recipient)
+        if recipient:
+            client.messages.create(to=recipient,
+                                   from_=settings.TWILIO_NUMBER,
+                                   body=message_to_broadcast)
+    return HttpResponse("messages sent!" + message_to_broadcast, 200)
 
 def home(request):
     categories = Category.objects.filter(is_active=True, is_featured=True)[:3]

@@ -3,7 +3,7 @@
 from pathlib import Path
 
 import os
-import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,7 +21,13 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-
+MY_ACCOUNT_SID='XXXXXXXXXXXXXX'
+TWILIO_AUTH_TOKEN='XXXXXXXXXXXXXX'
+MY_TWILIO_NUMBER='+XXXXXXXXXX'
+SMS_BROADCAST_TO_NUMBERS = [
+   "+23XXXXXXXXXXX",
+   "+23XXXXXXXXXXX", # use the format +1XXXXXXXXXX
+ ]
 INSTALLED_APPS = [
     'cloudinary_storage',
     'django.contrib.staticfiles',
