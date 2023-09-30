@@ -222,7 +222,7 @@ def checkout(request):
         # And Deleting from Cart
     
         c.delete()
-    client.messages.create(from_='+17128833459', to='+2348020558231', body='Go and Pick ' + str(c.quantity) + ' item(s) for ' + str(user) + ' at ' + str(address))
+    client.messages.create(from_='+17128833459', to='+2347042221248', body='Go and Pick ' + str(c.quantity) + ' item(s) for ' + str(user) + ' at ' + str(address))
          
     return redirect('store:orders')
 
@@ -245,11 +245,14 @@ def create_order(request):
 
 
 
-def custom_404(request, exception, template_name='404d.html'):
-    return render(request, '404d.html', {}, status=404)
+
+
 
                        
-        
+                       
+
+
+    return redirect('store:orders')
 
 
 def shop(request):

@@ -51,11 +51,6 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
-handler404 = 'store.views.custom_404'
-handler500 = 'store.views.custom_404'
-handler403 = 'store.views.custom_404'
-handler400 = 'store.views.custom_404'
-
 ROOT_URLCONF = 'jewelryshop.urls'
 
 TEMPLATES = [
