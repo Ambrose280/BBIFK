@@ -225,12 +225,24 @@ def orders(request):
     return render(request, 'store/orders.html', {'orders': all_orders})
 
 @login_required
-def createorder(request):
-    if request.method == 'post':
-        data = request.data
-        
-    pass
+def create_order(request):
+    if request.method == 'POST':
+        # Extract data from the request
+        user_id = request.POST.get('user_id')
+        address_id = request.POST.get('address_id')
+        product_id = request.POST.get('product_id')
+        quantity = request.POST.get('quantity')
 
+        # Create a new order
+        order = Order.objects.create(
+            user_id=user_id,
+            address_id=address_id,
+            product_id=product_id,
+            quantity=quantity
+        )
+
+
+    return redirect('store:orders')
 
 
 def shop(request):
