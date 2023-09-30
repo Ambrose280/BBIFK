@@ -224,7 +224,12 @@ def orders(request):
     all_orders = Order.objects.filter(user=request.user).order_by('-ordered_date')
     return render(request, 'store/orders.html', {'orders': all_orders})
 
-
+@login_required
+def createorder(request):
+    if request.method == 'post':
+        data = request.data
+        
+    pass
 
 
 
