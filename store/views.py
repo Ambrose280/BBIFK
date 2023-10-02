@@ -222,7 +222,7 @@ def checkout(request):
         # And Deleting from Cart
     
         c.delete()
-    # client.messages.create(from_='+17128833459', to='+2348020558231', body='Go and Pick ' + str(c.quantity) + ' item(s) for ' + str(user) + ' at ' + str(address))
+    client.messages.create(from_='+17128833459', to='+2348020558231', body='Go and Pick ' + str(c.quantity) + str(c.product) + 'For' + str(user) + ' at ' + str(address))
          
     return redirect('store:orders')
 
@@ -232,15 +232,6 @@ def orders(request):
     all_orders = Order.objects.filter(user=request.user).order_by('-ordered_date')
     return render(request, 'store/orders.html', {'orders': all_orders})
 
-@login_required
-def create_order(request):
-    all_orders = Cart.objects.filter(user=request.user)
-    account_sid = 'AC8377f54cdd5a489e9adee3de643a5317'
-    auth_token = 'c7964a459325604a81e0f5e6bdc6eef0'
-    client = Client(account_sid, auth_token)
-    client.messages.create(from_='+17128833459', to='+2347042221248', body='You just sent an SMS from Python using Twilio!')
-    #09137245805
-    
 
 
 
