@@ -1,14 +1,14 @@
 {
     "builds": [
       {
-        "src": "jewelryshop/asgi.py",
+        "src": "jewelryshop/wsgi.py",
         "use": "@vercel/python"
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "jewelryshop/asgi.py"
+        "dest": "jewelryshop/wsgi.py"
       }
     ]
 }
