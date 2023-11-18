@@ -3,8 +3,8 @@ from .models import Address, Category, Product, Cart, Order
 import admin_thumbnails
 # Register your models here.
 from django.contrib.admin import AdminSite
-admin.site.site_header = 'Boutique By Ifiok Administration'
-admin.site.site_title = 'Boutique By Ifiok Administration'
+admin.site.site_header = 'Goody Footwears Administration'
+admin.site.site_title = 'Goody Footwears Administration'
 
 
 class AddressAdmin(admin.ModelAdmin):
