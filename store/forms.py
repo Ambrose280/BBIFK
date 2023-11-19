@@ -83,10 +83,7 @@ class AddressForm(forms.ModelForm):
             'city': forms.Select(attrs={'class': 'form-control'}),
         }
  
-    def __init__(self, *args, **kwargs):
-        super(AddressForm, self).__init__(*args, **kwargs)
-        self.fields['state'].widget.choices = [(state, state) for state in self.LGA_CHOICES.keys()]
-
+    
 
 
 
