@@ -68,22 +68,36 @@ class AddressForm(forms.ModelForm):
         'Yobe': ['Bade', 'Bursari', 'Damaturu', 'Fika', 'Fune', 'Geidam', 'Gujba', 'Gulani', 'Jakusko', 'Karasuwa', 'Machina', 'Nangere', 'Nguru', 'Potiskum', 'Tarmuwa', 'Yunusari', 'Yusufari'],
         'Zamfara': ['Anka', 'Bakura', 'Birnin Magaji/Kiyaw', 'Bukkuyum', 'Bungudu', 'Gummi', 'Gusau', 'Isa', 'Kaura Namoda', 'Kiyawa', 'Maradun', 'Maru', 'Shinkafi', 'Talata Mafara', 'Chafe', 'Zurmi']
     }
-    state = forms.ChoiceField(choices=[(state, state) for state in LGA_CHOICES.keys()], 
-    widget=forms.Select(attrs={'class': 'form-control'}))
-    lga = forms.ChoiceField(choices=[], widget=forms.Select(attrs={'class': 'form-control'}))
+    
+    state = forms.ChoiceField(
+        choices=[(state, state) for state in LGA_CHOICES.keys()],
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    lga = forms.ChoiceField(
+        choices=[],
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
 
     class Meta:
         model = Address
         fields = ['locality', 'city', 'state', 'lga']
         widgets = {
-        'locality': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Popular Place like Restaurant, Religious Site, etc.'}),
-        'city': forms.Select(attrs={'class': 'form-control'}),}
+            'locality': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Popular Place like Restaurant, Religious Site, etc.'}),
+            'city': forms.Select(attrs={'class': 'form-control'}),
+        }
 
-        def __init__(self, *args, **kwargs):
-            super(AddressForm, self).__init__(*args, **kwargs)
-            self.fields['state'].widget.choices = [(state, state) for state in self.LGA_CHOICES.keys()]
-            def update_lga_choices(self, state):
-                self.fields['lga'].widget.choices = [(lga, lga) for lga in self.LGA_CHOICES.get(state, [])]
+    def __init__(self, *args, **kwargs):
+        super(AddressForm, self).__init__(*args, **kwargs)
+        self.fields['state'].widget.choices = [(state, state) for state in self.LGA_CHOICES.keys()]
+
+        if 'state' in self.data:
+            state = self.data['state']
+            self.fields['lga'].choices = [(lga, lga) for lga in self.LGA_CHOICES.get(state, [])]
+        elif self.instance.pk:
+            # If the form is bound to an instance, set the initial value for 'lga'
+            state = self.instance.state
+            self.fields['lga'].choices = [(lga, lga) for lga in self.LGA_CHOICES.get(state, [])]
+
 
 
 class PasswordChangeForm(PasswordChangeForm):
