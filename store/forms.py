@@ -73,14 +73,11 @@ class AddressForm(forms.ModelForm):
         choices=[(state, state) for state in LGA_CHOICES.keys()],
         widget=forms.Select(attrs={'class': 'form-control'})
     )
-    lga = forms.ChoiceField(
-        choices=[],
-        widget=forms.Select(attrs={'class': 'form-control'})
-    ) 
+
 
     class Meta:
         model = Address
-        fields = ['whatsapp', 'state', 'lga']
+        fields = ['whatsapp', 'state']
         widgets = {
             'locality': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Popular Place like Restaurant, Religious Site, etc.'}),
             'city': forms.Select(attrs={'class': 'form-control'}),
