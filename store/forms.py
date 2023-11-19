@@ -79,7 +79,6 @@ class AddressForm(forms.ModelForm):
         model = Address
         fields = ['whatsapp', 'state']
         widgets = {
-            'locality': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Popular Place like Restaurant, Religious Site, etc.'}),
             'city': forms.Select(attrs={'class': 'form-control'}),
         }
  
