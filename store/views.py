@@ -153,7 +153,7 @@ def cart(request):
 
     # Display Total on Cart Page
     amount = decimal.Decimal(0)
-    shipping_amount = decimal.Decimal(10)
+    shipping_amount = decimal.Decimal(4000)
     # using list comprehension to calculate total amount based on quantity and shipping
     cp = [p for p in Cart.objects.all() if p.user==user]
     if cp:
@@ -222,8 +222,7 @@ def checkout(request):
         # And Deleting from Cart
     
         c.delete()
-    client.messages.create(from_='+17128833459', to='+2347042221248', body='Go and Pick ' + str(c.quantity) + ' '+ str(c.product) + '(s) ' + 'For an order at' + str(address))
-         
+     
     return redirect('store:orders')
 
 
