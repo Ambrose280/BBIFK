@@ -82,7 +82,7 @@ class AddressForm(forms.ModelForm):
             'locality': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Popular Place like Restaurant, Religious Site, etc.'}),
             'city': forms.Select(attrs={'class': 'form-control'}),
         }
-
+ 
     def __init__(self, *args, **kwargs):
         super(AddressForm, self).__init__(*args, **kwargs)
         self.fields['state'].widget.choices = [(state, state) for state in self.LGA_CHOICES.keys()]
