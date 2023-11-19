@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator # for Class Based Views
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from django.conf import settings
-
+ 
 from twilio.rest import Client
 
 def home(request):
