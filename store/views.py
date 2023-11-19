@@ -112,9 +112,9 @@ class AddressView(View):
         form = AddressForm(request.POST)
         if form.is_valid():
             user=request.user
-            city = form.cleaned_data['city']
+            wa = form.cleaned_data['whatsapp']
             state = form.cleaned_data['state']
-            reg = Address(user=user, locality=locality, city=city, state=state)
+            reg = Address(user=user, whatsapp=wa, state=state)
             reg.save()
             messages.success(request, "New Address Added Successfully.")
         return redirect('store:profile')
