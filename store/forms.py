@@ -76,7 +76,7 @@ class AddressForm(forms.ModelForm):
     lga = forms.ChoiceField(
         choices=[],
         widget=forms.Select(attrs={'class': 'form-control'})
-    )
+    ) 
 
     class Meta:
         model = Address
