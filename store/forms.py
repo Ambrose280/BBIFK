@@ -80,7 +80,7 @@ class AddressForm(forms.ModelForm):
 
     class Meta:
         model = Address
-        fields = ['locality', 'city', 'state', 'lga']
+        fields = ['whatsapp', 'state', 'lga']
         widgets = {
             'locality': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Popular Place like Restaurant, Religious Site, etc.'}),
             'city': forms.Select(attrs={'class': 'form-control'}),
