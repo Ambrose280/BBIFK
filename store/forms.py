@@ -87,13 +87,6 @@ class AddressForm(forms.ModelForm):
         super(AddressForm, self).__init__(*args, **kwargs)
         self.fields['state'].widget.choices = [(state, state) for state in self.LGA_CHOICES.keys()]
 
-        if 'state' in self.data:
-            state = self.data['state']
-            self.fields['lga'].choices = [(lga, lga) for lga in self.LGA_CHOICES.get(state, [])]
-        elif self.instance.pk:
-            # If the form is bound to an instance, set the initial value for 'lga'
-            state = self.instance.state
-            self.fields['lga'].choices = [(lga, lga) for lga in self.LGA_CHOICES.get(state, [])]
 
 
 
