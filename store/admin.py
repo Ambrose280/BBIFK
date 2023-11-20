@@ -8,10 +8,10 @@ admin.site.site_title = 'Goody Footwears Administration'
 
 
 class AddressAdmin(admin.ModelAdmin):
-    list_display = ('user', 'whatsapp', 'state')
-    list_filter = ('whatsapp', 'state')
+    list_display = ('user', 'locality', 'city', 'state')
+    list_filter = ('city', 'state')
     list_per_page = 100
-    search_fields = ('whatsapp', 'state')
+    search_fields = ('locality', 'city', 'state')
 
 
 @admin_thumbnails.thumbnail('category_image')

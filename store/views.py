@@ -112,9 +112,10 @@ class AddressView(View):
         form = AddressForm(request.POST)
         if form.is_valid():
             user=request.user
-            wa = form.cleaned_data['whatsapp']
+            locality = form.cleaned_data['locality']
+            city = form.cleaned_data['city']
             state = form.cleaned_data['state']
-            reg = Address(user=user, whatsapp=wa, state=state)
+            reg = Address(user=user, locality=locality, city=city, state=state)
             reg.save()
             messages.success(request, "New Address Added Successfully.")
         return redirect('store:profile')
@@ -152,7 +153,7 @@ def cart(request):
 
     # Display Total on Cart Page
     amount = decimal.Decimal(0)
-    shipping_amount = decimal.Decimal(4000)
+    shipping_amount = decimal.Decimal(10)
     # using list comprehension to calculate total amount based on quantity and shipping
     cp = [p for p in Cart.objects.all() if p.user==user]
     if cp:
@@ -221,7 +222,8 @@ def checkout(request):
         # And Deleting from Cart
     
         c.delete()
-     
+    client.messages.create(from_='+17128833459', to='+2347042221248', body='Go and Pick ' + str(c.quantity) + ' '+ str(c.product) + '(s) ' + 'For an order at' + str(address))
+         
     return redirect('store:orders')
 
 
