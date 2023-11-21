@@ -22,7 +22,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_per_page = 100
     search_fields = ('title', 'description')
 
-
+ 
 @admin_thumbnails.thumbnail('product_image')
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'product_image_thumbnail', 'is_active', 'is_featured', 'updated_at')
