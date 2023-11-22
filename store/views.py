@@ -235,7 +235,7 @@ def checkout(request):
         client = Client(account_sid, auth_token)
         message = client.messages \
             .create(
-         from_='whatsapp:+17128833459',
+         from_='whatsapp:+14155238886',
          to='whatsapp:+2349166059162',
          body=order_summary)
         
