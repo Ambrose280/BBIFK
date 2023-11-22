@@ -232,21 +232,6 @@ def checkout(request):
 
         c.delete()
     
-    account_sid = 'AC8377f54cdd5a489e9adee3de643a5317'
-    auth_token = 'c7964a459325604a81e0f5e6bdc6eef0'
-    client = Client(account_sid, auth_token)
-
-    # Send SMS with the order summary
-    message_body = f"{user} at {address} just placed an order. {order_summary}"
-
-    message = client.messages \
-        .create(
-            media_url=[c.product.product_image],
-            from_='whatsapp:+17128833459',
-            to='whatsapp:+2349166059162',
-            body=message_body
-        )
-
     return redirect('store:orders')
 
 
