@@ -98,7 +98,7 @@
                   <h5 class="text-uppercase mb-4">Cart total</h5>
                   <ul class="list-unstyled mb-0">
                     <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Subtotal</strong><span class="text-muted small">₦{{amount|intcomma}}</span></li>
-                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Shipping Charge</strong><span class="text-muted small">+ ₦{{shipping_amount}}</span></li>
+                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Delivery Charge</strong><span class="text-muted small">+ ₦{{shipping_amount}}</span></li>
                     <li class="border-bottom my-2"></li>
                     <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Total</strong><span>₦{{total_amount|intcomma}}</span></li>
                     <li>
@@ -122,7 +122,7 @@
                       {% for address in addresses %}
                         <div class="mb-3">
                         <input type="radio" name="address" value="{{address.id}}"> <strong>Address {{forloop.counter}}</strong> <br>
-                        ( {{address.locality}}, {{address.city}}, {{address.state}} )
+                        ({{address.whatsapp}}, {{address.state}} )
                         </div>
                       {% endfor %}
                     {% endif %}
