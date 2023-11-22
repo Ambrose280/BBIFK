@@ -3,8 +3,9 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Address(models.Model):
-    whatsapp = models.CharField(max_length=150, verbose_name="Whatsapp")
-    state = models.CharField(max_length=150, verbose_name="State")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    whatsapp = models.CharField(max_length=150, verbose_name="Whatsapp", null=True)
+    state = models.CharField(max_length=150, verbose_name="State", null=True)
 
     def __str__(self):
         return self.state
