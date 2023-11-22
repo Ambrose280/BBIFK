@@ -112,10 +112,9 @@ class AddressView(View):
         form = AddressForm(request.POST)
         if form.is_valid():
             user=request.user
-            locality = form.cleaned_data['locality']
-            city = form.cleaned_data['city']
-            state = form.cleaned_data['state']
-            reg = Address(user=user, locality=locality, city=city, state=state)
+            whatsapp = form.cleaned_data['whatsapp'],
+            state = form.cleaned_data['state'],
+            reg = Address(user=user, whatsapp=whatsapp, state=state)
             reg.save()
             messages.success(request, "New Address Added Successfully.")
         return redirect('store:profile')
@@ -212,6 +211,7 @@ def checkout(request):
     client = Client(account_sid, auth_token)
     user = request.user
     address_id = request.GET.get('address')
+    print(address_id)
     
     address = get_object_or_404(Address, id=address_id)
     # Get all the products of User in Cart
@@ -222,7 +222,6 @@ def checkout(request):
         # And Deleting from Cart
     
         c.delete()
-    client.messages.create(from_='+17128833459', to='+2347042221248', body='Go and Pick ' + str(c.quantity) + ' '+ str(c.product) + '(s) ' + 'For an order at' + str(address))
          
     return redirect('store:orders')
 
