@@ -9,6 +9,7 @@ import decimal
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator # for Class Based Views
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import subprocess
 
 from django.conf import settings
 
@@ -195,6 +196,7 @@ def plus_cart(request, cart_id):
     return redirect('store:cart')
 
 
+
 @login_required
 def minus_cart(request, cart_id):
     if request.method == 'GET':
@@ -206,6 +208,22 @@ def minus_cart(request, cart_id):
             cp.quantity -= 1
             cp.save()
     return redirect('store:cart')
+
+def send_whatsapp_message(title, image, price, quantity, user, whatsapp, state):
+    # Find your Account SID and Auth Token at twilio.com/console
+    # and set the environment variables. See http://twil.io/secure
+    account_sid = 'AC8377f54cdd5a489e9adee3de643a5317'
+    auth_token = '4e0d1c268576e6cbab20646a6f75f6cb'
+    client = Client(account_sid, auth_token)
+
+    message = client.messages \
+        .create(
+            from_='whatsapp:+14155238886',
+            to='whatsapp:+2349166059162',
+            body = f"{user}, just placed an order for {quantity} {title}, {price}, {whatsapp} from {state}",
+            # media_url='https://goodyfootwears.vercel.app/'+str(image)
+        )
+
 @login_required
 def checkout(request):
     user = request.user
@@ -221,16 +239,12 @@ def checkout(request):
     # Get all the products of User in Cart
     cart = Cart.objects.filter(user=user)
 
-    order_summary = "Order Summary:\n"
 
     for c in cart:
         # Saving all the products from Cart to Order
         Order(user=user, address=address, product=c.product, quantity=c.quantity).save()
         bb = Address.objects.filter(user=user).values()
-
-        # Update order summary for the SMS
-        order_summary += f"{bb[0]['whatsapp']}, {bb[0]['state']}, {c.product.title} - Quantity: {c.quantity}, Price: {c.product.price}, {c.product.product_image}\n"
-        
+        send_whatsapp_message(c.product.title, c.product.product_image, c.product.price, user, bb[0]['whatsapp'], bb[0]['state'], c.quantity)
         c.delete()
     
     return redirect('store:orders')
