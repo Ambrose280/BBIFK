@@ -221,7 +221,6 @@ def send_whatsapp_message(title, image, price, quantity, user, whatsapp, state):
             from_='whatsapp:+14155238886',
             to='whatsapp:+2349166059162',
             body = f"{user}, just placed an order for {quantity} {title}, {price}, {whatsapp} from {state}",
-            media_url='https://res.cloudinary.com/dkgks4gxq/image/upload/v1/media/product/Product_83_o0v5ks'
         )
 
 @login_required
