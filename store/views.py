@@ -230,14 +230,6 @@ def checkout(request):
 
         # Update order summary for the SMS
         order_summary += f"{bb[0]['whatsapp']}, {bb[0]['state']}, {c.product.title} - Quantity: {c.quantity}, Price: {c.product.price}, {c.product.product_image}\n"
-        account_sid = 'AC8377f54cdd5a489e9adee3de643a5317'
-        auth_token = '169201a3bdc3e989f3bacb0b283c655b'
-        client = Client(account_sid, auth_token)
-        message = client.messages \
-            .create(
-         from_='whatsapp:+14155238886',
-         to='whatsapp:+2349166059162',
-         body=order_summary)
         
         c.delete()
     
