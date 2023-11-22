@@ -86,10 +86,10 @@ WSGI_APPLICATION = 'jewelryshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'greentweet_db',
-        'USER': 'greentweet_jj',
+        'NAME': 'ifiok-ambrose_database',
+        'USER': 'ifiok-ambrose',
         'PASSWORD': 'Ul=**pro1',
-        'HOST': 'postgresql-greentweet.alwaysdata.net',  # You can specify your database server's hostname or IP address here
+        'HOST': 'postgresql-ifiok-ambrose.alwaysdata.net',  # You can specify your database server's hostname or IP address here
         'PORT': '',           # Leave this empty for the default PostgreSQL port (5432)
     }
 }
