@@ -26,7 +26,7 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin_thumbnails.thumbnail('product_image')
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'product_image_thumbnail', 'is_active', 'is_featured', 'updated_at')
-    list_editable =  ('title', 'category', 'is_active', 'is_featured')
+    list_editable =  ('category', 'is_active', 'is_featured')
     list_filter = ('category', 'is_active', 'is_featured')
     list_per_page = 10
     search_fields = ('title', 'category', 'short_description')

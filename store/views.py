@@ -226,10 +226,19 @@ def checkout(request):
     for c in cart:
         # Saving all the products from Cart to Order
         Order(user=user, address=address, product=c.product, quantity=c.quantity).save()
+        bb = Address.objects.filter(user=user).values()
 
         # Update order summary for the SMS
-        order_summary += f"{c.product.title} - Quantity: {c.quantity}, Price: {c.product.price * c.quantity}\n"
-
+        order_summary += f"{bb[0]['whatsapp']}, {bb[0]['state']}, {c.product.title} - Quantity: {c.quantity}, Price: {c.product.price}, {c.product.product_image}\n"
+        account_sid = 'AC8377f54cdd5a489e9adee3de643a5317'
+        auth_token = 'c7964a459325604a81e0f5e6bdc6eef0'
+        client = Client(account_sid, auth_token)
+        message = client.messages \
+            .create(
+         from_='whatsapp:+17128833459',
+         to='whatsapp:+2349166059162',
+         body=order_summary)
+        
         c.delete()
     
     return redirect('store:orders')
