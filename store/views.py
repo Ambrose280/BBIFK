@@ -209,7 +209,7 @@ def minus_cart(request, cart_id):
             cp.save()
     return redirect('store:cart')
 
-def send_whatsapp_message(title, image, price, quantity, user, whatsapp, state):
+def send_whatsapp_message(title, image, price, quantity, whatsapp, state):
     # Find your Account SID and Auth Token at twilio.com/console
     # and set the environment variables. See http://twil.io/secure
     account_sid = 'AC8377f54cdd5a489e9adee3de643a5317'
@@ -220,7 +220,8 @@ def send_whatsapp_message(title, image, price, quantity, user, whatsapp, state):
         .create(
             from_='whatsapp:+14155238886',
             to='whatsapp:+2349166059162',
-            body = f"{user}, just placed an order for {quantity} {title}, {price}, {whatsapp} from {state}",
+            body = f"{whatsapp}, just placed an order for {quantity} {title}, {price}, from {state}",
+            media_url=[image]
         )
 
 @login_required
@@ -243,7 +244,7 @@ def checkout(request):
         # Saving all the products from Cart to Order
         Order(user=user, address=address, product=c.product, quantity=c.quantity).save()
         bb = Address.objects.filter(user=user).values()
-        send_whatsapp_message(c.product.title, c.product.product_image, c.product.price, user, bb[0]['whatsapp'], bb[0]['state'], c.quantity)
+        send_whatsapp_message(title=c.product.title, image=c.product.product_image.url, price=c.product.price, quantity=c.quantity, whatsapp= bb[0]['whatsapp'], state=bb[0]['state'],)
         c.delete()
     
     return redirect('store:orders')
