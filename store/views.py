@@ -203,31 +203,35 @@ def minus_cart(request, cart_id):
             cp.save()
     return redirect('store:cart')
 
-
 @login_required
 def checkout(request):
-    account_sid = 'AC8377f54cdd5a489e9adee3de643a5317'
-    auth_token = 'c7964a459325604a81e0f5e6bdc6eef0'
-    client = Client(account_sid, auth_token)
     user = request.user
+
+    # Check if the user has at least one address
+    if not Address.objects.filter(user=user).exists():
+        return redirect('store:add-address')
+
     address_id = request.GET.get('address')
     print(address_id)
-    
+
     address = get_object_or_404(Address, id=address_id)
+
     # Get all the products of User in Cart
     cart = Cart.objects.filter(user=user)
+
     for c in cart:
         # Saving all the products from Cart to Order
         Order(user=user, address=address, product=c.product, quantity=c.quantity).save()
         # And Deleting from Cart
-    
         c.delete()
-         
+
     return redirect('store:orders')
+
 
 
 @login_required
 def orders(request):
+    
     all_orders = Order.objects.filter(user=request.user).order_by('-ordered_date')
     return render(request, 'store/orders.html', {'orders': all_orders})
 
