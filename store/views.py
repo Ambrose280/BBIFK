@@ -17,9 +17,6 @@ from twilio.rest import Client
 import os
 from twilio.rest import Client
 
-account_sid = 'AC8377f54cdd5a489e9adee3de643a5317'
-auth_token = 'c7964a459325604a81e0f5e6bdc6eef0'
-client = Client(account_sid, auth_token)
 
 def home(request):
     categories = Category.objects.filter(is_active=True, is_featured=True)[:3]
@@ -234,6 +231,10 @@ def checkout(request):
         order_summary += f"{c.product.title} - Quantity: {c.quantity}, Price: {c.product.price * c.quantity}\n"
 
         c.delete()
+    
+    account_sid = 'AC8377f54cdd5a489e9adee3de643a5317'
+    auth_token = 'c7964a459325604a81e0f5e6bdc6eef0'
+    client = Client(account_sid, auth_token)
 
     # Send SMS with the order summary
     message_body = f"{user} at {address} just placed an order. {order_summary}"
