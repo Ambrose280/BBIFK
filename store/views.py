@@ -231,7 +231,7 @@ def checkout(request):
         Order(user=user, address=address, product=c.product, quantity=c.quantity).save()
 
         # Update order summary for the SMS
-        order_summary += f"{c.product.name} - Quantity: {c.quantity}, Price: {c.product.price * c.quantity}\n"
+        order_summary += f"{c.product.title} - Quantity: {c.quantity}, Price: {c.product.price * c.quantity}\n"
 
         c.delete()
 
