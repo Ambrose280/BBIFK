@@ -13,6 +13,13 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
 
 from twilio.rest import Client
+# Download the helper library from https://www.twilio.com/docs/python/install
+import os
+from twilio.rest import Client
+
+account_sid = 'AC8377f54cdd5a489e9adee3de643a5317'
+auth_token = 'c7964a459325604a81e0f5e6bdc6eef0'
+client = Client(account_sid, auth_token)
 
 def home(request):
     categories = Category.objects.filter(is_active=True, is_featured=True)[:3]
@@ -202,7 +209,6 @@ def minus_cart(request, cart_id):
             cp.quantity -= 1
             cp.save()
     return redirect('store:cart')
-
 @login_required
 def checkout(request):
     user = request.user
@@ -212,21 +218,35 @@ def checkout(request):
         return redirect('store:add-address')
 
     address_id = request.GET.get('address')
-    print(address_id)
 
     address = get_object_or_404(Address, id=address_id)
 
     # Get all the products of User in Cart
     cart = Cart.objects.filter(user=user)
 
+    order_summary = "Order Summary:\n"
+
     for c in cart:
         # Saving all the products from Cart to Order
         Order(user=user, address=address, product=c.product, quantity=c.quantity).save()
-        # And Deleting from Cart
+
+        # Update order summary for the SMS
+        order_summary += f"{c.product.name} - Quantity: {c.quantity}, Price: {c.product.price * c.quantity}\n"
+
         c.delete()
 
-    return redirect('store:orders')
+    # Send SMS with the order summary
+    message_body = f"{user} at {address} just placed an order. {order_summary}"
 
+    message = client.messages \
+        .create(
+            media_url=[c.product.product_image],
+            from_='whatsapp:+17128833459',
+            to='whatsapp:+2349166059162',
+            body=message_body
+        )
+
+    return redirect('store:orders')
 
 
 @login_required
