@@ -121,7 +121,7 @@
                     {% if addresses %}
                       {% for address in addresses %}
                         <div class="mb-3">
-                        <input type="radio" name="address" value="{{address.id}}"> <strong>Address {{forloop.counter}}</strong> <br>
+                        <input type="radio" name="address" value="{{address.id}}" required> <strong>Address {{forloop.counter}}</strong> <br>
                         {{address.whatsapp}}, {{address.state}}
                         </div>
                       {% endfor %}
