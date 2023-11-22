@@ -122,7 +122,7 @@
                       {% for address in addresses %}
                         <div class="mb-3">
                         <input type="radio" name="address" value="{{address.id}}"> <strong>Address {{forloop.counter}}</strong> <br>
-                        ({{address.whatsapp}}, {{address.state}} )
+                        {{address.whatsapp}}, {{address.state}}
                         </div>
                       {% endfor %}
                     {% endif %}
