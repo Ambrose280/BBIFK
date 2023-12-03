@@ -18,6 +18,8 @@ from twilio.rest import Client
 import os
 from twilio.rest import Client
 
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
 
 def home(request):
     categories = Category.objects.filter(is_active=True, is_featured=True)[:3]

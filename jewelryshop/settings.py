@@ -25,6 +25,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'cloudinary_storage',
     'django.contrib.staticfiles',
+    'whitenoise.runserver_nostatic',
     'cloudinary',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware", #
 ]
 
 ROOT_URLCONF = 'jewelryshop.urls'
@@ -104,7 +106,7 @@ DATABASES = {
 #     }
 # }
 
-
+handler404 = 'app_name.views.custom_404'
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dkgks4gxq',
@@ -178,7 +180,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"#add
 # Settings for Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
