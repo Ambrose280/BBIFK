@@ -215,7 +215,7 @@ def send_whatsapp_message(title, image, price, quantity, whatsapp, state):
     # Find your Account SID and Auth Token at twilio.com/console
     # and set the environment variables. See http://twil.io/secure
     account_sid = 'AC8377f54cdd5a489e9adee3de643a5317'
-    auth_token = '4e0d1c268576e6cbab20646a6f75f6cb'
+    auth_token = '6dc94c13f4e7a0ecccb110f84bb21f4e'
     client = Client(account_sid, auth_token)
 
     message = client.messages \
