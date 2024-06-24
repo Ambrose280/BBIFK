@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'jewelryshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ifiok-ambrose_database',
+        'NAME': 'ifiok-ambrose_ecomm',
         'USER': 'ifiok-ambrose',
         'PASSWORD': 'Ul=**pro1',
         'HOST': 'postgresql-ifiok-ambrose.alwaysdata.net',  # You can specify your database server's hostname or IP address here
