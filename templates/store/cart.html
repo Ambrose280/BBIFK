@@ -60,7 +60,7 @@
                         </div>
                       </th>
                       <td class="align-middle border-0">
-                        <p class="mb-0 small">₦{{cart_product.product.price}}</p>
+                        <p class="mb-0 small">${{cart_product.product.price}}</p>
                       </td>
                       <td class="align-middle border-0">
                         <div class="border d-flex align-items-center justify-content-between px-3"><span class="small text-uppercase text-gray headings-font-family">Quantity</span>
@@ -74,7 +74,7 @@
                         </div>
                       </td>
                       <td class="align-middle border-0">
-                        <p class="mb-0 small">₦{{cart_product.total_price|intcomma}}</p>
+                        <p class="mb-0 small">${{cart_product.total_price|intcomma}}</p>
                       </td>
                       <td class="align-middle border-0"><a class="reset-anchor" href="{% url 'store:remove-cart' cart_product.id %}"><i class="fas fa-trash-alt small text-muted"></i></a></td>
                     </tr>
@@ -87,7 +87,7 @@
               <div class="bg-light px-4 py-3">
                 <div class="row align-items-center text-center">
                   <div class="col-md-6 mb-3 mb-md-0 text-md-left"><a class="btn btn-link p-0 text-dark btn-sm" href="{% url 'store:home' %}"><i class="fas fa-long-arrow-alt-left mr-2"> </i>Continue shopping</a></div>
-                  <div class="col-md-6 text-md-right"><a class="btn btn-outline-dark btn-sm" href="{% url 'store:orders' %}">..<i class="fas fa-long-arrow-alt-right ml-2"></i></a></div>
+                  <div class="col-md-6 text-md-right"><a class="btn btn-outline-dark btn-sm" href="checkout.html">Procceed to checkout<i class="fas fa-long-arrow-alt-right ml-2"></i></a></div>
                 </div>
               </div>
             </div>
@@ -97,10 +97,10 @@
                 <div class="card-body">
                   <h5 class="text-uppercase mb-4">Cart total</h5>
                   <ul class="list-unstyled mb-0">
-                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Subtotal</strong><span class="text-muted small">₦{{amount|intcomma}}</span></li>
-                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Delivery Charge</strong><span class="text-muted small">+ ₦{{shipping_amount}}</span></li>
+                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Subtotal</strong><span class="text-muted small">${{amount|intcomma}}</span></li>
+                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Shipping Charge</strong><span class="text-muted small">+ ${{shipping_amount}}</span></li>
                     <li class="border-bottom my-2"></li>
-                    <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Total</strong><span>₦{{total_amount|intcomma}}</span></li>
+                    <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Total</strong><span>${{total_amount|intcomma}}</span></li>
                     <li>
 
                       {% comment %} <form action="#">
@@ -114,24 +114,24 @@
                   </ul>
 
                   
-                  <h5 class="text-uppercase my-5">Select WayBill Address, you'll be contacted via your WhatsApp Number</h5>
+                  <h5 class="text-uppercase my-5">Select Shipping Address</h5>
                   
                   <form action="{% url 'store:checkout' %}" id="myform">
 
                     {% if addresses %}
                       {% for address in addresses %}
                         <div class="mb-3">
-                        <input type="radio" name="address" value="{{address.id}}" required> <strong>Address {{forloop.counter}}</strong> <br>
-                        {{address.whatsapp}}, {{address.state}}
+                        <input type="radio" name="address" value="{{address.id}}"> <strong>Address {{forloop.counter}}</strong> <br>
+                        ( {{address.locality}}, {{address.city}}, {{address.state}} )
                         </div>
                       {% endfor %}
                     {% endif %}
 
                     <!-- Set up a container element for the button -->
-                    <div class="text-end" id="paypal-button-container"></div>
+              
 
                     {% comment %} For Cash on Delivery {% endcomment %}
-                    <button type="submit" class="btn btn-dark btn-lg btn-outline-dark" type="submit"> <i class="fas fa-naira-sign mr-2"></i>Place All Orders</button>
+                    <button type="submit" class="btn btn-dark btn-lg btn-outline-dark" type="submit"> <i class="fas fa-dollar-sign mr-2"></i>Cash on Delivery</button>
 
                   </form>
 

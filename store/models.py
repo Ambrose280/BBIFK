@@ -3,12 +3,13 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Address(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    whatsapp = models.CharField(max_length=150, verbose_name="Whatsapp", null=True)
-    state = models.CharField(max_length=150, verbose_name="State", null=True)
+    user = models.ForeignKey(User, verbose_name="User", on_delete=models.CASCADE)
+    locality = models.CharField(max_length=150, verbose_name="Nearest Location")
+    city = models.CharField(max_length=150, verbose_name="City")
+    state = models.CharField(max_length=150, verbose_name="State")
 
     def __str__(self):
-        return self.state
+        return self.locality
 
 
 class Category(models.Model):

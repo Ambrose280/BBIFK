@@ -1,9 +1,9 @@
 {% load static %}
-{% load socialaccount %}
+
 <!-- navbar-->
       <header class="header bg-white">
         <div class="container px-0 px-lg-3">
-          <nav class="navbar navbar-expand-lg navbar-light py-3 px-lg-0"><a class="navbar-brand" href="{% url 'store:home' %}"><span class="font-weight-bold text-uppercase text-dark">Goody Footwears</a>
+          <nav class="navbar navbar-expand-lg navbar-light py-3 px-lg-0"><a class="navbar-brand" href="{% url 'store:home' %}"><span class="font-weight-bold text-uppercase text-dark">Jewelry</span></a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
@@ -41,15 +41,15 @@
                       <a class="dropdown-item border-0 transition-link" href="{% url 'store:profile' %}">Profile</a>
                       <a class="dropdown-item border-0 transition-link" href="{% url 'store:cart' %}">Cart</a>
                       <a class="dropdown-item border-0 transition-link" href="{% url 'store:orders' %}">Orders</a>
-                     
+                      <a class="dropdown-item border-0 transition-link" href="{% url 'store:password-change' %}">Change Password</a>
 
                     <hr>
-                    <a class="dropdown-item border-0 transition-link" href="{% url 'account_logout' %}">Log Out</a>
+                    <a class="dropdown-item border-0 transition-link" href="{% url 'store:logout' %}">Log Out</a>
                     
                 </li>
                 {% else %}
-                  <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#">Create Account</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'store:login' %}">Login</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'store:register' %}">Create Account</a></li>
                 {% endif %}   
               </ul>
             </div>

@@ -8,18 +8,9 @@ from django.views import View
 import decimal
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator # for Class Based Views
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import subprocess
 
-from django.conf import settings
 
-from twilio.rest import Client
-# Download the helper library from https://www.twilio.com/docs/python/install
-import os
-from twilio.rest import Client
-
-def custom_404(request, exception):
-    return render(request, '404.html', status=404)
+# Create your views here.
 
 def home(request):
     categories = Category.objects.filter(is_active=True, is_featured=True)[:3]
@@ -47,33 +38,9 @@ def all_categories(request):
     return render(request, 'store/categories.html', {'categories':categories})
 
 
-# def category_products(request, slug):
-#     category = get_object_or_404(Category, slug=slug)
-#     products = Product.objects.filter(is_active=True, category=category)
-#     categories = Category.objects.filter(is_active=True)
-#     context = {
-#         'category': category,
-#         'products': products,
-#         'categories': categories,
-#     }
-#     return render(request, 'store/category_products.html', context)
-
-
 def category_products(request, slug):
     category = get_object_or_404(Category, slug=slug)
     products = Product.objects.filter(is_active=True, category=category)
-    
-    # Paginate the products
-    page = request.GET.get('page')
-    paginator = Paginator(products, 3)  # You can change the number of products per page (e.g., 12)
-    
-    try:
-        products = paginator.page(page)
-    except PageNotAnInteger:
-        products = paginator.page(1)
-    except EmptyPage:
-        products = paginator.page(paginator.num_pages)
-    
     categories = Category.objects.filter(is_active=True)
     context = {
         'category': category,
@@ -81,10 +48,6 @@ def category_products(request, slug):
         'categories': categories,
     }
     return render(request, 'store/category_products.html', context)
-
-# {% with products_length=products|length %}
-#   The length of my_list is {{ products_length }}.
-# {% endwith %}
 
 
 # Authentication Starts Here
@@ -106,22 +69,23 @@ class RegistrationView(View):
 def profile(request):
     addresses = Address.objects.filter(user=request.user)
     orders = Order.objects.filter(user=request.user)
-    return render(request, 'accnt/profile.html', {'addresses':addresses, 'orders':orders})
+    return render(request, 'account/profile.html', {'addresses':addresses, 'orders':orders})
 
 
 @method_decorator(login_required, name='dispatch')
 class AddressView(View):
     def get(self, request):
         form = AddressForm()
-        return render(request, 'accnt/add_address.html', {'form': form})
+        return render(request, 'account/add_address.html', {'form': form})
 
     def post(self, request):
         form = AddressForm(request.POST)
         if form.is_valid():
             user=request.user
-            whatsapp = form.cleaned_data['whatsapp'],
-            state = form.cleaned_data['state'],
-            reg = Address(user=user, whatsapp=whatsapp, state=state)
+            locality = form.cleaned_data['locality']
+            city = form.cleaned_data['city']
+            state = form.cleaned_data['state']
+            reg = Address(user=user, locality=locality, city=city, state=state)
             reg.save()
             messages.success(request, "New Address Added Successfully.")
         return redirect('store:profile')
@@ -198,7 +162,6 @@ def plus_cart(request, cart_id):
     return redirect('store:cart')
 
 
-
 @login_required
 def minus_cart(request, cart_id):
     if request.method == 'GET':
@@ -211,65 +174,30 @@ def minus_cart(request, cart_id):
             cp.save()
     return redirect('store:cart')
 
-def send_whatsapp_message(title, image, price, quantity, whatsapp, state):
-    # Find your Account SID and Auth Token at twilio.com/console
-    # and set the environment variables. See http://twil.io/secure
-    account_sid = ''
-    auth_token = ''
-    client = Client(account_sid, auth_token)
-
-    message = client.messages \
-        .create(
-            from_='whatsapp:+',
-            to='whatsapp:+2342',
-            body = f"{whatsapp}, just placed an order for {quantity} {title}, {price}, from {state}",
-            media_url=[image]
-        )
 
 @login_required
 def checkout(request):
     user = request.user
-
-    # Check if the user has at least one address
-    if not Address.objects.filter(user=user).exists():
-        return redirect('store:add-address')
-
     address_id = request.GET.get('address')
-
+    
     address = get_object_or_404(Address, id=address_id)
-
     # Get all the products of User in Cart
     cart = Cart.objects.filter(user=user)
-
-
     for c in cart:
         # Saving all the products from Cart to Order
         Order(user=user, address=address, product=c.product, quantity=c.quantity).save()
-        bb = Address.objects.filter(user=user).values()
-        # send_whatsapp_message(title=c.product.title, image=c.product.product_image.url, price=c.product.price, quantity=c.quantity, whatsapp= bb[0]['whatsapp'], state=bb[0]['state'],)
+        # And Deleting from Cart
         c.delete()
-    
     return redirect('store:orders')
 
 
 @login_required
 def orders(request):
-    
     all_orders = Order.objects.filter(user=request.user).order_by('-ordered_date')
     return render(request, 'store/orders.html', {'orders': all_orders})
 
 
 
-
-
-
-
-
-                       
-                       
-
-
-    return redirect('store:orders')
 
 
 def shop(request):
