@@ -50,11 +50,8 @@
                       <th class="pl-0 border-0" scope="row">
                         <div class="media align-items-center">
 
-                          {% if cart_product.product.product_image %}
-                            <a class="reset-anchor d-block animsition-link" href="{% url 'store:product-detail' cart_product.product.slug %}"><img src="{{cart_product.product.product_image.url}}" alt="{{cart_product.product.title}}" width="70"/></a>
-                          {% else %}
-                            <a class="reset-anchor d-block animsition-link" href="{% url 'store:product-detail' cart_product.product.slug %}"><img src="{% static 'img/product-detail-3.jpg' %}" alt="{{cart_product.product.title}}" width="70"/></a>
-                          {% endif %}
+                            <a class="reset-anchor d-block animsition-link" href="{% url 'store:product-detail' cart_product.product.slug %}"><img src="{{cart_product.product.product_image}}" alt="{{cart_product.product.title}}" width="70"/></a>
+                        
 
                           <div class="media-body ml-3"><strong class="h6"><a class="reset-anchor animsition-link" href="{% url 'store:product-detail' cart_product.product.slug %}">{{cart_product.product.title}}</a></strong></div>
                         </div>

@@ -1,8 +1,15 @@
-
-
 from pathlib import Path
 
 import os
+import cloudinary
+
+cloudinary.config( 
+  cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"), 
+  api_key=os.getenv("CLOUDINARY_API_KEY"), 
+  api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+  secure=True
+)
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,15 +26,14 @@ DEBUG = True
 import os
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://ecommercedemo.leapcell.app",
-    # add any other production domains here
+    "https://ecommercedemo.leapcell.app", 
 ]
 
 
 ALLOWED_HOSTS = ['*']
 
 
-# Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -49,6 +55,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+}
 
 ROOT_URLCONF = 'jewelryshop.urls'
 
@@ -122,16 +134,12 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'jewelryshop/static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static') # Automatically Created on Production
-
-# Settings for Media
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
