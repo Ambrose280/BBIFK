@@ -19,6 +19,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://ecommercedemo.leapcell.app/"
+]
 
 # Application definition
 
