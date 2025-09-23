@@ -10,6 +10,7 @@ CREATE DATABASE bbifk;
 GRANT ALL PRIVILEGES ON DATABASE bbifk TO ifiokambrose;
 GRANT ALL ON SCHEMA public TO ifiokambrose;
 
+
 -- Make sure the user has access to the database itself
 GRANT ALL PRIVILEGES ON DATABASE mydatabase TO ifiokambrose;
 
