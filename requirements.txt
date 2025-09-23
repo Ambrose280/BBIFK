@@ -1,12 +1,5 @@
-﻿asgiref==3.9.1
-certifi==2025.8.3
-cloudinary==1.44.1
-Django==5.2.6
-pillow==11.3.0
-psycopg2-binary==2.9.10
-python-dotenv==1.1.1
-pytz==2025.2
-setuptools==80.9.0
-six==1.17.0
-sqlparse==0.5.3
-urllib3==2.5.0
+asgiref
+Django
+Pillow
+pytz
+sqlparse

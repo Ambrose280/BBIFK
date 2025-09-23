@@ -1,18 +1,11 @@
 from pathlib import Path
-
 import os
-import cloudinary
+from dotenv import load_dotenv
 
-cloudinary.config( 
-  cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"), 
-  api_key=os.getenv("CLOUDINARY_API_KEY"), 
-  api_secret=os.getenv("CLOUDINARY_API_SECRET"),
-  secure=True
-)
-
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env file
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -23,17 +16,11 @@ SECRET_KEY = 'django-insecure-3%y3laftm62q0zaj+s7#p-xqq9(&#q+)s8)p-&#&bz*0$!xu$0
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-import os
-
-CSRF_TRUSTED_ORIGINS = [
-    "https://ecommercedemo.leapcell.app", 
-]
-
 
 ALLOWED_HOSTS = ['*']
 
 
-
+# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -55,12 +42,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
-}
 
 ROOT_URLCONF = 'jewelryshop.urls'
 
@@ -91,14 +72,13 @@ WSGI_APPLICATION = 'jewelryshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("DB_NAME"),
-        'USER': os.getenv("DB_USER"),
-        'PASSWORD': os.getenv("DB_PASSWORD"),
-        'HOST': os.getenv("DB_HOST"),
-        'PORT': os.getenv("DB_PORT"),
+        'NAME': os.getenv('POSTGRES_DB', 'bbifk'),
+        'USER': os.getenv('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'postgres'),
+        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
-
 
 
 # Password validation
@@ -134,12 +114,16 @@ USE_L10N = True
 USE_TZ = True
 
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
-MEDIA_URL = '/media/'
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'jewelryshop/static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static') # Automatically Created on Production
+
+# Settings for Media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
