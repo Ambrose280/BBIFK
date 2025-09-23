@@ -7,3 +7,4 @@ CREATE DATABASE mydatabase;
 GRANT ALL PRIVILEGES ON DATABASE mydatabase TO ifiokambrose;
 GRANT ALL ON SCHEMA public TO ifiokambrose;
 
+{% url 'store:checkout' %}
