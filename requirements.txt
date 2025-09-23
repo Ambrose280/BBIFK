@@ -1,5 +1,7 @@
-asgiref
-Django
-Pillow
-pytz
-sqlparse
+asgiref==3.9.1
+Django==5.2.6
+pillow==11.3.0
+psycopg2-binary==2.9.10
+python-dotenv==1.1.1
+pytz==2025.2
+sqlparse==0.5.3
