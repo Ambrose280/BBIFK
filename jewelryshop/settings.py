@@ -17,13 +17,15 @@ SECRET_KEY = 'django-insecure-3%y3laftm62q0zaj+s7#p-xqq9(&#q+)s8)p-&#&bz*0$!xu$0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+
+ALLOWED_HOSTS = ["ecommercedemo.leapcell.app"]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://ecommercedemo.leapcell.app/"
+    "https://ecommercedemo.leapcell.app",
 ]
 
-# Application definition
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
