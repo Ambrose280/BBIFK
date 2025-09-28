@@ -8,6 +8,7 @@ from django.views import View
 import decimal
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator # for Class Based Views
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # Create your views here.
@@ -38,9 +39,32 @@ def all_categories(request):
     return render(request, 'store/categories.html', {'categories':categories})
 
 
+# def category_products(request, slug):
+#     category = get_object_or_404(Category, slug=slug)
+#     products = Product.objects.filter(is_active=True, category=category)
+#     categories = Category.objects.filter(is_active=True)
+#     context = {
+#         'category': category,
+#         'products': products,
+#         'categories': categories,
+#     }
+#     return render(request, 'store/category_products.html', context)
+
 def category_products(request, slug):
     category = get_object_or_404(Category, slug=slug)
     products = Product.objects.filter(is_active=True, category=category)
+    
+    # Paginate the products
+    page = request.GET.get('page')
+    paginator = Paginator(products, 2)  # You can change the number of products per page (e.g., 12)
+    
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+    
     categories = Category.objects.filter(is_active=True)
     context = {
         'category': category,
@@ -48,7 +72,6 @@ def category_products(request, slug):
         'categories': categories,
     }
     return render(request, 'store/category_products.html', context)
-
 
 # Authentication Starts Here
 
