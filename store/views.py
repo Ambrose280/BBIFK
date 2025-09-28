@@ -56,7 +56,7 @@ def category_products(request, slug):
     
     # Paginate the products
     page = request.GET.get('page')
-    paginator = Paginator(products, 1)  # You can change the number of products per page (e.g., 12)
+    paginator = Paginator(products, 3)  # You can change the number of products per page (e.g., 12)
     
     try:
         products = paginator.page(page)
