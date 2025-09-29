@@ -35,9 +35,9 @@
                       <td>{{forloop.counter}}</td>
                       <td>{{order.product.title}}</td>
                       <td>
-                        {% if order.product.product_image %}
-                          <img src="{{order.product.product_image.url}}" alt="{{order.product.product_ttile}}" style="width:150px;">
-                        {% endif %}
+                        
+                          <img src="{{order.product.product_image_url }}" alt="{{order.product.product_ttile}}" style="width:150px;">
+                       
                       </td>
                       <td>{{order.quantity}}</td>
                       <td>{{order.ordered_date|naturaltime}}</td>

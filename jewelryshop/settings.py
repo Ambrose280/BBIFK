@@ -7,6 +7,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Load environment variables from .env file
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+cloudinary.config( 
+  cloud_name = os.getenv('CLOUD_NAME'),
+  api_key = os.getenv('API_KEY'), 
+  api_secret = os.getenv('API_SECRET'),
+  secure=True
+)
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -18,7 +29,7 @@ SECRET_KEY = 'django-insecure-3%y3laftm62q0zaj+s7#p-xqq9(&#q+)s8)p-&#&bz*0$!xu$0
 DEBUG = True
 
 
-ALLOWED_HOSTS = ["ecommercedemo.leapcell.app"]
+ALLOWED_HOSTS = ["ecommercedemo.leapcell.app", "127.0.0.1", "localhost"]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://ecommercedemo.leapcell.app",
