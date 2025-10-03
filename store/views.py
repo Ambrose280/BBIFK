@@ -23,13 +23,21 @@ def home(request):
     return render(request, 'store/index.html', context)
 
 
+from django.shortcuts import render, get_object_or_404
+from .models import Product, Cart
+
 def detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
     related_products = Product.objects.exclude(id=product.id).filter(is_active=True, category=product.category)
+    
+    in_cart = False
+    if request.user.is_authenticated:
+        in_cart = Cart.objects.filter(user=request.user, product=product).exists()
+    
     context = {
         'product': product,
         'related_products': related_products,
-
+        'in_cart': in_cart,
     }
     return render(request, 'store/detail.html', context)
 

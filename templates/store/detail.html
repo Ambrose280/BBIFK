@@ -31,10 +31,9 @@
                 <div class="col-sm-5 pr-sm-0">
                   <div class="border d-flex align-items-center justify-content-between py-1 px-3 bg-white border-white"><span class="small text-uppercase text-gray mr-4 no-select">Quantity</span>
                     <div class="quantity">
-                      <button class="dec-btn p-0"><i class="fas fa-caret-left"></i></button>
+
                       <input name="quantity" class="form-control border-0 shadow-0 p-0" type="text" value="1" readonly>
-                      <button class="inc-btn p-0"><i class="fas fa-caret-right"></i></button>
-                    </div>
+                       </div>
                   </div>
                 </div>
 
@@ -43,7 +42,11 @@
                   
                   <form action="{% url 'store:add-to-cart' %}">
                     <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
-                    <button type="submit" class="btn btn-dark btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">Add to Cart</button>
+                    {% if in_cart %}
+                      <button type="submit" formaction="{% url 'store:remove-from-cart' %}" class="btn btn-danger btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">Remove from Cart</button>
+                    {% else %}
+                      <button type="submit" class="btn btn-dark btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">Add to Cart</button>
+                    {% endif %}
                   </form>
 
                 </div>
