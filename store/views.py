@@ -29,15 +29,18 @@ from .models import Product, Cart
 def detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
     related_products = Product.objects.exclude(id=product.id).filter(is_active=True, category=product.category)
-    
     in_cart = False
+    cart_id = None
     if request.user.is_authenticated:
-        in_cart = Cart.objects.filter(user=request.user, product=product).exists()
-    
+        cart_item = Cart.objects.filter(user=request.user, product=product).first()
+        if cart_item:
+            in_cart = True
+            cart_id = cart_item.id
     context = {
         'product': product,
         'related_products': related_products,
         'in_cart': in_cart,
+        'cart_id': cart_id,
     }
     return render(request, 'store/detail.html', context)
 
