@@ -38,14 +38,16 @@
                 </div>
 
                 <div class="col-sm-3 pl-sm-0">
-                  <form method="post">
-                    {% csrf_token %}
+                  
                     {% if in_cart %}
-                      <button type="submit" formaction="{% url 'store:remove-cart' cart_id %}" class="btn btn-danger btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">Remove from Cart</button>
+                      <a href="{% url 'store:remove-cart' cart_id %}" class="btn btn-danger btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">
+                        Remove from Cart
+                      </a>
                     {% else %}
-                      <button type="submit" formaction="{% url 'store:add-to-cart' %}" class="btn btn-dark btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">Add to Cart</button>
+                      <a href="{% url 'store:add-to-cart' %}?product_id={{ product.id }}" class="btn btn-dark btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">
+                        Add to Cart
+                      </a>
                     {% endif %}
-                  </form>
                 </div>
 
               </div><br>
