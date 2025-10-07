@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-3%y3laftm62q0zaj+s7#p-xqq9(&#q+)s8)p-&#&bz*0$!xu$0
 DEBUG = True
 
 
-ALLOWED_HOSTS = ["ecommercedemo.leapcell.app", "127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["ecommercedemo.leapcell.app", "127.0.0.1", "localhost", "bbifk.vercel.app"]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://ecommercedemo.leapcell.app",
