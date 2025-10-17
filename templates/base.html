@@ -32,8 +32,17 @@
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+        <style>
+    .navbar-light .navbar-nav .show > .nav-link,
+    .navbar-light .navbar-nav .active > .nav-link,
+    .navbar-light .navbar-nav .nav-link.show,
+    .navbar-light .navbar-nav .nav-link.active {
+      color: orangered;
+      font-weight: bold;
+    }
+  </style>
   </head>
-  <body>
+  <body style="background-color: #ebebeb; color: orangered;">
     <div class="page-holder">
       {% include 'navbar.html' %}
 

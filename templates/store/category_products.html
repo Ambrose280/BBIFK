@@ -51,49 +51,41 @@
                
                 </div>
 
-                <div class="row">
+<div class="row">
+  {% if products %}
+    {% for product in products %}
+      <!-- PRODUCT -->
+      <div class="col-6 col-sm-6 col-md-4 col-lg-3 mb-4">
+        <div class="product text-center">
+          <div class="mb-3 position-relative">
+            <div class="badge text-white badge-"></div>
 
-                  {% if products %}
-                    {% for product in products %}
-                    
-                      <!-- PRODUCT-->
-                      <div class="col-lg-4 col-sm-6">
-                        <div class="product text-center">
-                          <div class="mb-3 position-relative">
+            <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
+              <img class="img-fluid w-100" src="{{ product.product_image_url }}" alt="{{ product.title }}">
+            </a>
 
-                            <div class="badge text-white badge-"></div>
+            <div class="product-overlay">
+              <ul class="mb-0 list-inline">
+                <li class="list-inline-item m-0 p-0">
+                  <a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a>
+                </li>
+                <li class="list-inline-item m-0 p-0">
+                  <form action="{% url 'store:add-to-cart' %}">
+                    <input type="hidden" name="prod_id" value="{{ product.id }}" id="product_id">
+                    <button type="submit" class="btn btn-sm btn-dark">Add to Cart</button>
+                  </form>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <h6><a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></h6>
+          <p class="small text-muted">₦{{ product.price }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>
 
-                            <a class="d-block" href="{% url 'store:product-detail' product.slug %}">
-                             
-                                <img class="img-fluid w-100" src="{{product.product_image_url}}" alt="{{product.title}}">
-                             
-                            </a>
-
-                            <div class="product-overlay">
-                              <ul class="mb-0 list-inline">
-                                <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li>
-                                <li class="list-inline-item m-0 p-0">
-                                  {% comment %} <a class="btn btn-sm btn-dark" href="{% url 'store:add-to-cart' %}">Add to cart</a> {% endcomment %}
-
-                                  <form action="{% url 'store:add-to-cart' %}">
-                                    <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
-                                    <button type="submit" class="btn btn-sm btn-dark">Add to Cart</button>
-                                  </form>
-
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                          <h6> <a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{product.title}}</a></h6>
-                          <p class="small text-muted">₦{{product.price}}</p>
-                        </div>
-                      </div>
-
-                    {% endfor %}
-                  {% endif %}
-
-
-                </div>
                 <!-- PAGINATION-->
                 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center justify-content-lg-end">
