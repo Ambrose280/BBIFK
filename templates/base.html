@@ -40,6 +40,20 @@
       color: orangered;
       font-weight: bold;
     }
+    .navbar .dropdown-menu {
+    border-top: 2px solid orangered;
+
+}
+.navbar .dropdown-menu::before {
+    content: '';
+    display: block;
+    border-left: 0.5rem solid transparent;
+    border-right: 0.5rem solid transparent;
+    border-bottom: 0.5rem solid orangered;
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+}
   </style>
   </head>
   <body style="background-color: #ebebeb; color: orangered;">
