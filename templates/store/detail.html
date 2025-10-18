@@ -44,7 +44,7 @@
                         Remove from Cart
                       </a>
                     {% else %}
-                      <a href="{% url 'store:add-to-cart' %}?product_id={{ product.id }}" class="btn btn-dark btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">
+                      <a href="#" class="btn btn-dark btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">
                         Add to Cart
                       </a>
                     {% endif %}
@@ -61,8 +61,8 @@
             <li class="nav-item"><a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a></li>
           </ul>
           <div class="tab-content mb-5" id="myTabContent">
-            <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
-              <div class="p-4 p-lg-5 bg-white">
+            <div class="tab-pane fade show active" style="background-color: #ebebeb !important;" id="description" role="tabpanel" aria-labelledby="description-tab">
+              <div class="p-4 p-lg-5 bg-white" style="background-color: #ebebeb !important;">
                 <h6 class="text-uppercase">Product description </h6>
                 <p class="text-muted text-small mb-0">{{product.detail_description}}</p>
               </div>
@@ -88,12 +88,7 @@
                         
                       </a>
 
-                      <div class="product-overlay">
-                        <ul class="mb-0 list-inline">
-                          <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li>
-                          <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="{% url 'store:add-to-cart' %}">Add to cart</a></li>
-                        </ul>
-                      </div>
+                    
                     </div>
                     <h6> <a class="reset-anchor" href="{% url 'store:product-detail' rp.slug %}">{{rp.title}}</a></h6>
                     <p class="small text-muted">₦{{rp.price}}</p>
