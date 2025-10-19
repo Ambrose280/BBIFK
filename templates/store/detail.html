@@ -45,7 +45,7 @@
                       </a>
                     {% else %}
                       <a href="#" class="btn btn-dark btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">
-                        Add to Cart
+                        Purchase
                       </a>
                     {% endif %}
                 </div>
@@ -91,7 +91,8 @@
                     
                     </div>
                     <h6> <a class="reset-anchor" href="{% url 'store:product-detail' rp.slug %}">{{rp.title}}</a></h6>
-                    <p class="small text-muted">₦{{rp.price}}</p>
+                    <p class="small text-muted">₦{{ product.price }}
+</p>
                   </div>
                 </div>
 

@@ -60,8 +60,8 @@ class Product(models.Model):
     product_image_url = models.URLField(max_length=500, blank=True, null=True, verbose_name="Product Image URL")
     temp_image = models.ImageField(upload_to='tmp', blank=True, null=True)
 
-    price = models.DecimalField(max_digits=8, decimal_places=2)
-    category = models.ForeignKey(Category, verbose_name="Product Categoy", on_delete=models.CASCADE)
+    price = models.PositiveIntegerField()
+    category = models.ForeignKey(Category, verbose_name="Product Category", on_delete=models.CASCADE)
     is_active = models.BooleanField(verbose_name="Is Active?")
     is_featured = models.BooleanField(verbose_name="Is Featured?")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created Date")

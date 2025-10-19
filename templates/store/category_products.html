@@ -79,7 +79,7 @@
             </div>
           </div>
           <h6><a class="reset-anchor" href="{% url 'store:product-detail' product.slug %}">{{ product.title }}</a></h6>
-          <p class="small text-muted">₦{{ product.price }}</p>
+          <p class="small text-muted">₦{{ product.price | int }}</p>
         </div>
       </div>
     {% endfor %}
