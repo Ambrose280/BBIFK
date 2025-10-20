@@ -37,18 +37,16 @@
                   </div>
                 </div>
 
-                <div class="col-sm-3 pl-sm-0">
+        <div class="col-sm-3 pl-sm-0">
+                  {% comment %} <a class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0" href="{% url 'store:add-to-cart' %}">Add to cart</a> {% endcomment %}
                   
-                    {% if in_cart %}
-                      <a href="{% url 'store:remove-cart' cart_id %}" class="btn btn-danger btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">
-                        Remove from Cart
-                      </a>
-                    {% else %}
-                      <a href="#" class="btn btn-dark btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">
-                        Purchase
-                      </a>
-                    {% endif %}
+                  <form action="{% url 'store:add-to-cart' %}">
+                    <input type="hidden" name="prod_id" value="{{product.id}}" id="product_id">
+                    <button type="submit" class="btn btn-dark btn-lg btn-block h-100 d-flex align-items-center justify-content-center px-0">Add to Cart</button>
+                  </form>
+
                 </div>
+                
 
               </div><br>
               <ul class="list-unstyled small d-inline-block">

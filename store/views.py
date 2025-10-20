@@ -9,7 +9,9 @@ import decimal
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator # for Class Based Views
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+import requests
+from django.conf import settings
+from django.urls import reverse
 
 # Create your views here.
 
@@ -157,7 +159,7 @@ def cart(request):
 
     # Display Total on Cart Page
     amount = decimal.Decimal(0)
-    shipping_amount = decimal.Decimal(10)
+ 
     # using list comprehension to calculate total amount based on quantity and shipping
     cp = [p for p in Cart.objects.all() if p.user==user]
     if cp:
@@ -171,8 +173,8 @@ def cart(request):
     context = {
         'cart_products': cart_products,
         'amount': amount,
-        'shipping_amount': shipping_amount,
-        'total_amount': amount + shipping_amount,
+       
+        'total_amount': amount,
         'addresses': addresses,
     }
     return render(request, 'store/cart.html', context)
@@ -212,18 +214,101 @@ def minus_cart(request, cart_id):
 @login_required
 def checkout(request):
     user = request.user
-    address_id = request.GET.get('address')
-    
-    address = get_object_or_404(Address, id=address_id)
-    # Get all the products of User in Cart
-    cart = Cart.objects.filter(user=user)
-    for c in cart:
-        # Saving all the products from Cart to Order
-        Order(user=user, address=address, product=c.product, quantity=c.quantity).save()
-        # And Deleting from Cart
-        c.delete()
-    return redirect('store:orders')
+    addresses = Address.objects.filter(user=user)
 
+    if not addresses.exists():
+        return redirect('accounts:profile')
+
+    if request.method == "POST":
+        address_id = request.POST.get('address')
+        address = get_object_or_404(Address, id=address_id, user=user)
+
+        # Get user cart
+        cart_items = Cart.objects.filter(user=user)
+        if not cart_items.exists():
+            return redirect('store:cart')
+
+        total_amount = sum(item.product.price * item.quantity for item in cart_items)
+        paystack_secret = settings.PAYSTACK_SECRET_KEY
+        callback_url = request.build_absolute_uri(reverse('store:payment_success'))
+        email = user.email
+        amount_kobo = int(total_amount * 100)
+
+        headers = {
+            "Authorization": f"Bearer {paystack_secret}",
+            "Content-Type": "application/json",
+        }
+        data = {
+            "email": email,
+            "amount": amount_kobo,
+            "callback_url": callback_url,
+            "metadata": {
+                "user_id": user.id,
+                "address_id": address.id
+            }
+        }
+
+        response = requests.post('https://api.paystack.co/transaction/initialize', json=data, headers=headers)
+        res_data = response.json()
+
+        if res_data.get('status'):
+            return redirect(res_data['data']['authorization_url'])
+        else:
+            return render(request, 'store/payment_error.html', {'error': res_data.get('message', 'Payment initialization failed.')})
+    
+    # GET: Show the checkout page with addresses
+    return render(request, 'store/checkout.html', {'addresses': addresses})
+
+
+# in store/views.py
+from django.contrib.auth.views import LogoutView
+
+class CustomLogoutView(LogoutView):
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
+
+@login_required
+def payment_success(request):
+    """
+    This view is called by Paystack after successful payment.
+    It should verify the transaction and then create orders for the user.
+    """
+    reference = request.GET.get('reference')
+    if not reference:
+        return redirect('store:checkout')
+
+    # Verify payment with Paystack
+    verify_url = f"https://api.paystack.co/transaction/verify/{reference}"
+    headers = {
+        "Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}",
+        "Content-Type": "application/json",
+    }
+    response = requests.get(verify_url, headers=headers)
+    data = response.json()
+
+    if data.get('status') and data['data']['status'] == 'success':
+        user = request.user
+        metadata = data['data'].get('metadata', {})
+        address_id = metadata.get('address_id')
+
+        address = Address.objects.filter(id=address_id, user=user).first()
+        if not address:
+            return redirect('accounts:profile')
+
+        cart_items = Cart.objects.filter(user=user)
+        for item in cart_items:
+            Order.objects.create(
+                user=user,
+                address=address,
+                product=item.product,
+                quantity=item.quantity,
+            )
+            item.delete()
+
+        return render(request, 'store/payment_success.html', {'data': data})
+    else:
+        return render(request, 'store/payment_error.html', {'error': 'Payment verification failed'})
 
 @login_required
 def orders(request):

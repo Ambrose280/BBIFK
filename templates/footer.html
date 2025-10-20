@@ -1,26 +1,64 @@
-<footer class="bg-dark text-white">
-        <div class="container py-4">
-          <div class="row py-5">
-       
-            <div class="col-md-4">
-              <h6 class="text-uppercase mb-3">Social media</h6>
-              <ul class="list-unstyled mb-0">
-                <li><a class="footer-link" href="#">Twitter</a></li>
-                <li><a class="footer-link" href="#">Instagram</a></li>
-                <li><a class="footer-link" href="#">Tumblr</a></li>
-                <li><a class="footer-link" href="#">Pinterest</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="border-top pt-4" style="border-color: #1d1d1d !important">
-            <div class="row">
-              <div class="col-lg-6">
-                <p class="small text-muted mb-0">&copy; 2020 All rights reserved.</p>
-              </div>
-              <div class="col-lg-6 text-lg-right">
-                <p class="small text-muted mb-0">Website by <a class="text-white reset-anchor" href="#" target="_blank"></a></p>
-              </div>
-            </div>
-          </div>
+<footer class="bg-dark text-white mt-5">
+  <div class="container py-5">
+    <div class="row">
+      <!-- About -->
+      <div class="col-md-4 mb-4">
+        <h5 class="text-uppercase mb-3">About</h5>
+        <p class="small text-muted">
+          Welcome to <strong>Prince SOJ Luxury</strong> — your destination for premium fashion and lifestyle products. 
+          We bring luxury closer to you with elegance and quality.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-md-4 mb-4">
+        <h5 class="text-uppercase mb-3">Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a class="footer-link text-white-50" href="{% url 'store:home' %}"><i class="fas fa-home mr-2"></i>Home</a></li>
+          <li><a class="footer-link text-white-50" href="{% url 'store:all-categories' %}"><i class="fas fa-th-large mr-2"></i>Categories</a></li>
+          <li><a class="footer-link text-white-50" href="{% url 'store:cart' %}"><i class="fas fa-shopping-cart mr-2"></i>Cart</a></li>
+          <li><a class="footer-link text-white-50" href="{% url 'store:orders' %}"><i class="fas fa-box mr-2"></i>Orders</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact & Social -->
+      <div class="col-md-4 mb-4">
+        <h5 class="text-uppercase mb-3">Contact Us</h5>
+        <ul class="list-unstyled text-white-50 mb-3">
+          <li><i class="fas fa-phone-alt mr-2 text-white"></i>Call: <strong>08109615960</strong></li>
+          <li><i class="fab fa-whatsapp mr-2 text-success"></i>WhatsApp: <strong>08159644999</strong></li>
+          <li><i class="fas fa-envelope mr-2 text-white"></i>Email: <a href="mailto:princesoj88@gmail.com" class="text-white-50">princesoj88@gmail.com</a></li>
+          <li><i class="fas fa-map-marker-alt mr-2 text-danger"></i>Address: <span>Aka Road No.183, beside Wema Bank, IBB Roundabout, Uyo</span></li>
+          <li><i class="fas fa-car mr-2 text-warning"></i>Bolt: <strong>Prince SOJ Luxury</strong></li>
+        </ul>
+
+        <h6 class="text-uppercase mb-2">Social Media</h6>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="https://www.snapchat.com/add/princesoj7?share_id=bqm3v_kJSdyPFd7YgjFvLg&locale=en_US" class="text-white-50 mr-3" target="_blank">
+            <i class="fab fa-snapchat fa-lg text-warning"></i>
+          </a>
+          <a href="https://www.instagram.com/luxuryprincesoj?igsh=dmpueGd4aGhlamhl&utm_source=qr" class="text-white-50 mr-3" target="_blank">
+            <i class="fab fa-instagram fa-lg text-danger"></i>
+          </a>
+          <a href="https://chat.whatsapp.com/JnlbySYZlG04wvHYBOqQe6?mode=ems_copy_t" class="text-white-50" target="_blank">
+            <i class="fab fa-whatsapp fa-lg text-success"></i>
+          </a>
         </div>
-      </footer>
+      </div>
+    </div>
+
+    <hr class="border-secondary">
+
+    <div class="row align-items-center pt-3">
+      <div class="col-md-6 text-center text-md-left">
+        <p class="small mb-0 text-muted">&copy; {{ now|date:"Y" }} Prince SOJ Luxury. All rights reserved.</p>
+      </div>
+      <div class="col-md-6 text-center text-md-right">
+        <p class="small mb-0 text-muted">
+          Built with <i class="fas fa-heart text-danger"></i> by 
+          <a href="#" class="text-white reset-anchor font-weight-bold">Quasar Web Tools</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

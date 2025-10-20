@@ -128,7 +128,7 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
+PAYSTACK_SECRET_KEY = os.getenv('PAYSTACK_SECRET_KEY')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

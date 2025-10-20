@@ -2,8 +2,8 @@ from store.forms import LoginForm, PasswordChangeForm, PasswordResetForm, SetPas
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-
-
+from django.urls import reverse_lazy
+from .views import CustomLogoutView
 app_name = 'store'
 
 
@@ -16,6 +16,7 @@ urlpatterns = [
     path('minus-cart/<int:cart_id>/', views.minus_cart, name="minus-cart"),
     path('cart/', views.cart, name="cart"),
     path('checkout/', views.checkout, name="checkout"),
+    path('payment-success/', views.payment_success, name='payment_success'),
     path('orders/', views.orders, name="orders"),
 
     #URL for Products
@@ -31,7 +32,8 @@ urlpatterns = [
     path('accounts/profile/', views.profile, name="profile"),
     path('accounts/add-address/', views.AddressView.as_view(), name="add-address"),
     path('accounts/remove-address/<int:id>/', views.remove_address, name="remove-address"),
-    path('accounts/logout/', auth_views.LogoutView.as_view(next_page='store:login'), name="logout"),
+    path('accounts/logout/', CustomLogoutView.as_view(next_page='store:login'), name="logout"),
+
 
     path('accounts/password-change/', auth_views.PasswordChangeView.as_view(template_name='account/password_change.html', form_class=PasswordChangeForm, success_url='/accounts/password-change-done/'), name="password-change"),
     path('accounts/password-change-done/', auth_views.PasswordChangeDoneView.as_view(template_name='account/password_change_done.html'), name="password-change-done"),

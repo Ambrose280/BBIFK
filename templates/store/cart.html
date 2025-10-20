@@ -38,7 +38,7 @@
                     <tr>
                       <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Product</strong></th>
                       <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Price</strong></th>
-                      <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Quantity</strong></th>
+                      
                       <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Total</strong></th>
                       <th class="border-0" scope="col"> </th>
                     </tr>
@@ -58,17 +58,7 @@
                       <td class="align-middle border-0">
                         <p class="mb-0 small">₦{{cart_product.product.price}}</p>
                       </td>
-                      <td class="align-middle border-0">
-                        <div class="border d-flex align-items-center justify-content-between px-3"><span class="small text-uppercase text-gray headings-font-family">Quantity</span>
-                          <div class="quantity">
-                            <a href="{% url 'store:minus-cart' cart_product.id %}" class="dec-btn p-0 ml-2"><i class="fas fa-minus"></i></a>
-                            {% comment %} <button class="dec-btn p-0"><i class="fas fa-caret-left"></i></button> {% endcomment %}
-                            <input class="form-control form-control-sm border-0 shadow-0 p-0" type="text" value="{{cart_product.quantity}}"/>
-                            {% comment %} <button class="inc-btn p-0"><i class="fas fa-caret-right"></i></button> {% endcomment %}
-                            <a href="{% url 'store:plus-cart' cart_product.id %}" class="inc-btn p-0"><i class="fas fa-plus"></i></a>
-                          </div>
-                        </div>
-                      </td>
+                      
                       <td class="align-middle border-0">
                         <p class="mb-0 small">₦{{cart_product.total_price|intcomma}}</p>
                       </td>
@@ -93,8 +83,8 @@
                 <div class="card-body">
                   <h5 class="text-uppercase mb-4">Cart total</h5>
                   <ul class="list-unstyled mb-0">
-                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Subtotal</strong><span class="text-muted small">₦{{amount|intcomma}}</span></li>
-                    <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Shipping Charge</strong><span class="text-muted small">+ ₦{{shipping_amount}}</span></li>
+                 
+         
                     <li class="border-bottom my-2"></li>
                     <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Total</strong><span>₦{{total_amount|intcomma}}</span></li>
                     <li>
@@ -112,24 +102,29 @@
                   
                   <h5 class="text-uppercase my-5">Select Shipping Address</h5>
                   
-                  <form action="#" id="myform">
+                  <form method="POST" action="{% url 'store:checkout' %}" id="myform">
+  {% csrf_token %}
+  
+  {% if addresses %}
+    {% for address in addresses %}
+      <div class="mb-3">
+        <input type="radio" name="address" value="{{ address.id }}" required> 
+        <strong>Address {{ forloop.counter }}</strong><br>
+        ({{ address.locality }}, {{ address.city }}, {{ address.state }})
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No addresses found. <a href="{% url 'store:profile' %}">Add one here</a>.</p>
+  {% endif %}
 
-                    {% if addresses %}
-                      {% for address in addresses %}
-                        <div class="mb-3">
-                        <input type="radio" name="address" value="{{address.id}}"> <strong>Address {{forloop.counter}}</strong> <br>
-                        ( {{address.locality}}, {{address.city}}, {{address.state}} )
-                        </div>
-                      {% endfor %}
-                    {% endif %}
+  <div class="text-end" id="paypal-button-container"></div>
 
-                    <!-- Set up a container element for the button -->
-                    <div class="text-end" id="paypal-button-container"></div>
+  <!-- You can keep this as a fallback or alternate option -->
+  <button type="submit" class="btn btn-dark btn-lg btn-outline-dark">
+    <i class="fas fa-dollar-sign mr-2"></i> Proceed to Checkout
+  </button>
+</form>
 
-                    {% comment %} For Cash on Delivery {% endcomment %}
-                    <button type="submit" class="btn btn-dark btn-lg btn-outline-dark" type="submit"> <i class="fas fa-dollar-sign mr-2"></i>Cash on Delivery</button>
-
-                  </form>
 
                 </div>
               </div>
@@ -150,36 +145,3 @@
       </div>
       {% endblock content %}
 
-      {% block payment-gateway %}
-        <!-- Include the PayPal JavaScript SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=YOUR-PAYPAL-CLIENT-ID&currency=USD"></script>
-
-    <script>
-        // Render the PayPal button into #paypal-button-container
-        paypal.Buttons({
-
-            // Set up the transaction
-            createOrder: function(data, actions) {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: '{{total_amount}}'
-                        }
-                    }]
-                });
-            },
-
-            // Finalize the transaction
-            onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                    // Show a success message to the buyer
-                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
-                    // Savind Order in Database after Payment Success
-                    document.getElementById('myform').submit();
-                });
-            }
-
-
-        }).render('#paypal-button-container');
-    </script>
-      {% endblock payment-gateway %}
