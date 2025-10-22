@@ -217,7 +217,7 @@ def checkout(request):
     addresses = Address.objects.filter(user=user)
 
     if not addresses.exists():
-        return redirect('accounts:profile')
+        return redirect('store:profile')
 
     if request.method == "POST":
         address_id = request.POST.get('address')
