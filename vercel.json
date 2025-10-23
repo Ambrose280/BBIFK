@@ -1,0 +1,15 @@
+{
+  "builds": [
+    {
+      "src": "jewelryshop/wsgi.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "jewelryshop/wsgi.py"
+    }
+  ],
+  "buildCommand": "python manage.py collectstatic --noinput && python manage.py migrate --noinput"
+}
