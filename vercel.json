@@ -1,15 +1,13 @@
 {
-  "builds": [
-    {
-      "src": "jewelryshop/wsgi.py",
-      "use": "@vercel/python"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "jewelryshop/wsgi.py"
-    }
-  ],
-  "buildCommand": "python manage.py collectstatic --noinput && python manage.py migrate --noinput"
+    "builds": [{
+        "src": "vercel_app/wsgi.py",
+        "use": "@ardnt/vercel-python-wsgi",
+        "config": { "maxLambdaSize": "15mb" }
+    }],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "jewelryshop/wsgi.py"
+        }
+    ]
 }
