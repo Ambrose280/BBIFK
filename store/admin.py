@@ -24,6 +24,16 @@ class CategoryAdmin(admin.ModelAdmin):
     search_fields = ('title', 'description')
     prepopulated_fields = {"slug": ("title", )}
 
+    def category_image_thumb(self, obj):
+        """Renders a clickable product image preview from Cloudinary."""
+        if obj.category_image_url:
+            return mark_safe(
+                f'<a href="{obj.category_image_url}" target="_blank">'
+                f'<img src="{obj.category_image_url}" '
+                f'style="height:60px;border-radius:6px;object-fit:cover;" /></a>'
+            )
+        return "—"
+    category_image_thumb.short_description = "Preview"
     
 
 
