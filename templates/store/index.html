@@ -10,7 +10,7 @@
             <div class="row px-4 px-lg-5">
               <div class="col-lg-6">
                 <p class="text-muted small text-uppercase mb-2" style="color: #ffffff !important;">New Inspiration 2025</p>
-                <h1 class="h2 text-uppercase mb-3" style="color: #ff7500;">>20% off on new season</h1><a class="btn btn-dark" href="{% url 'store:all-categories' %}">Browse collections</a>
+                <h1 class="h2 text-uppercase mb-3" style="color: #ff7500;"></h1><a class="btn btn-dark" href="{% url 'store:all-categories' %}">Browse collections</a>
               </div>
             </div>
           </div>
@@ -18,24 +18,32 @@
 
 
         <!-- CATEGORIES SECTION-->
-        <section class="pt-5">
-          <header class="text-center">
-            <p class="small text-muted small text-uppercase mb-1">Carefully created collections</p>
-            <h2 class="h5 text-uppercase mb-4">Browse our categories</h2>
+        <section class="py-5">
+          <header>
+           
+            <h2 class="h5 text-uppercase mb-4">Top trending categories</h2>
           </header>
           <div class="row">
   {% if categories %}
     {% for category in categories %}
-      <div class="col-6 col-md-6 mb-4">
-        <a class="category-item d-block text-center" href="{% url 'store:category-products' category.slug %}">
-          <img class="img-fluid mb-2" src="{{ category.category_image_url }}" alt="{{ category.title }}">
-          <strong class="category-item-title d-block">{{ category.title }}</strong>
-        </a>
+      <!-- CATEGORY -->
+      <div class="col-6 col-sm-6 col-md-4 col-lg-3 mb-4">
+        <div class="product text-center">
+          <div class="position-relative mb-3">
+            <div class="badge text-white badge-"></div>
+
+            <a class="d-block" href="{% url 'store:category-products' category.slug %}">
+              <img class="img-fluid w-100" src="{{ category.category_image_url }}" alt="{{ category.title }}">
+            </a>
+
+          </div>
+          <h6><a class="reset-anchor" href="{% url 'store:category-products' category.slug %}">{{ category.title }}</a></h6>
+       
+        </div>
       </div>
     {% endfor %}
   {% endif %}
 </div>
-
 
         </section>
 
@@ -78,11 +86,6 @@
   <img src="{% static 'img/122.png' %}" alt="Loading..." class="splash-logo">
 </div>
 
-<!-- Actual Page Content -->
-<div id="main-content" style="display:none;">
-  <h1>Welcome to My Site</h1>
-  <p>This is your homepage content.</p>
-</div>
 
 <!-- Script -->
 <script>
@@ -107,26 +110,48 @@
 <style>
   #splash-screen {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #ffffff; /* You can change background color */
+    inset: 0;
+    background: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    padding: 1rem;
   }
 
+  /* Responsive splash logo size (mobile -> large desktop) */
   .splash-logo {
-    width: 180px;
+    width: clamp(120px, 36vw, 720px); /* min, preferred, max */
+    max-width: 92%;
     height: auto;
+    max-height: 80vh;              /* prevents overflow on short viewports */
+    object-fit: contain;
     animation: fadeIn 1s ease-in-out;
   }
 
   @keyframes fadeIn {
     from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* Ensure main content is hidden until splash removed */
+  #main-content { display: none; }
+
+  /* Tweak sizes for common breakpoints */
+  @media (max-width: 420px) {
+    .splash-logo { width: clamp(100px, 46vw, 320px); max-height: 60vh; }
+  }
+
+  @media (min-width: 768px) {
+    .splash-logo { width: clamp(180px, 30vw, 540px); }
+  }
+
+  @media (min-width: 1200px) {
+    .splash-logo { width: clamp(260px, 24vw, 640px); }
+  }
+
+  @media (min-width: 1600px) {
+    .splash-logo { width: 840px; max-width: 95%; }
   }
 </style>
 
