@@ -1,5 +1,11 @@
 from django.contrib import admin
 from .models import Address, Category, Product, Cart, Order
+import admin_thumbnails
+from django.utils.html import mark_safe
+
+admin.site.site_header = "Prince Luxury Admin"
+admin.site.site_title = "Prince SOJ Dashboard"
+admin.site.index_title = "Welcome to the Control Panel"
 
 # Register your models here.
 class AddressAdmin(admin.ModelAdmin):
@@ -7,6 +13,7 @@ class AddressAdmin(admin.ModelAdmin):
     list_filter = ('city', 'state')
     list_per_page = 10
     search_fields = ('locality', 'city', 'state')
+
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -17,14 +24,27 @@ class CategoryAdmin(admin.ModelAdmin):
     search_fields = ('title', 'description')
     prepopulated_fields = {"slug": ("title", )}
 
+    
+
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug', 'category', 'product_image_url', 'is_active', 'is_featured', 'updated_at')
+    list_display = ('title', 'slug', 'category', 'product_image_thumb', 'is_active', 'is_featured', 'updated_at')
     list_editable = ('slug', 'category', 'is_active', 'is_featured')
     list_filter = ('category', 'is_active', 'is_featured')
     list_per_page = 10
     search_fields = ('title', 'category', 'short_description')
     prepopulated_fields = {"slug": ("title", )}
+    
+    def product_image_thumb(self, obj):
+        """Renders a clickable product image preview from Cloudinary."""
+        if obj.product_image_url:
+            return mark_safe(
+                f'<a href="{obj.product_image_url}" target="_blank">'
+                f'<img src="{obj.product_image_url}" '
+                f'style="height:60px;border-radius:6px;object-fit:cover;" /></a>'
+            )
+        return "—"
+    product_image_thumb.short_description = "Preview"
 
 class CartAdmin(admin.ModelAdmin):
     list_display = ('user', 'product', 'quantity', 'created_at')
