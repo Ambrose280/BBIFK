@@ -1,4 +1,15 @@
-{% load static %}
+<!-- Scrolling Contact Bar -->
+<div class="contact-bar bg-dark text-white py-2">
+  <marquee behavior="scroll" direction="left" scrollamount="4"
+           onmouseover="this.stop();" onmouseout="this.start();"
+           ontouchstart="this.stop();" ontouchend="this.start();">
+    <span class="mx-3">📞 Call: 08109615960</span>
+    <span class="mx-3">💬 WhatsApp: 08159644999</span>
+    <span class="mx-3">✉️ Email: princesoj88@gmail.com</span>
+    <span class="mx-3">📍 Address: Aka Road No.183, beside Wema Bank, IBB Roundabout, Uyo</span>
+    <span class="mx-3">🚘 Bolt: Prince SOJ Luxury</span>
+  </marquee>
+</div>
 
 <!-- Navbar -->
 <header class="header bg-white" style="background-color:#ebebeb !important">
@@ -8,13 +19,14 @@
         <span class="font-weight-bold text-uppercase text-dark">Prince SOJ Luxury</span>
       </a>
 
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+              data-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <!-- Left side (Categories & Home) -->
+        <!-- Left side -->
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <a class="nav-link active" style="color: #dcb14a;" href="{% url 'store:home' %}">Home</a>
@@ -38,7 +50,7 @@
           </li>
         </ul>
 
-        <!-- Right side (User menu) -->
+        <!-- Right side -->
         <ul class="navbar-nav ml-auto">
           {% if request.user.is_authenticated %}
             <li class="nav-item">
@@ -67,13 +79,9 @@
                 <a class="dropdown-item border-0 transition-link" href="{% url 'store:orders' %}">Orders</a>
                 <a class="dropdown-item border-0 transition-link" href="{% url 'store:password-change' %}">Change Password</a>
                 <hr>
-
-                <!-- Hidden logout form -->
                 <form id="logout-form" action="{% url 'store:logout' %}" method="post" style="display: none;">
                   {% csrf_token %}
                 </form>
-
-                <!-- Logout link triggers the POST form -->
                 <a class="dropdown-item border-0 transition-link" href="#"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                   Log Out
